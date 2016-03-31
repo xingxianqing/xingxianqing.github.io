@@ -843,6 +843,89 @@
 
 
   
+    <article id="post-让自己的开源项目支持CocoaPods" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/30/让自己的开源项目支持CocoaPods/" class="article-date">
+  	<time datetime="2016-03-30T10:05:50.000Z" itemprop="datePublished">2016-03-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/30/让自己的开源项目支持CocoaPods/">让自己的开源项目支持CocoaPods</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>HZCountDownBtn 是我为测试的时候创建的一个倒计时的按钮，以它为例子！</p>
+<p>1.在github上创建一个HZCountDownBtn，<strong>重要：记得选择开源协议 （MIT）</strong></p>
+<p>2.将HZCountDownBtn clone到自己的工作目录</p>
+<ol>
+<li>cd到当前目录</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd HZCountDownBtn</span><br></pre></td></tr></table></figure>
+<p>4.创建一个podspec文件,命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod spec create HZCountDownBtn</span><br></pre></td></tr></table></figure>
+<p>5.编辑 podspec文件，这里是用vim打开的，命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim HZCountDownBtn.podspec</span><br></pre></td></tr></table></figure></p>
+<p>6.创建之后会自动生成一个模板，里面会有详细的注释，我们只需要按需要修改这个文件即可，下边这个是测试的时候我编辑的 （如果需要更更多的配置 可以参考别的开源项目的podspec文件）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Pod::Spec.new do |s|</span><br><span class="line">  s.name     = &apos;HZCountDownBtn&apos; </span><br><span class="line">  s.version  = &apos;1.2&apos; </span><br><span class="line">  s.license  = &quot;MIT&quot;  //开源协议</span><br><span class="line">  s.summary  = &apos;This is a countdown button&apos; //简单的描述 </span><br><span class="line">  s.homepage = &apos;https://github.com/xingxianqing/HZCountdownBtn&apos; //主页</span><br><span class="line">  s.author   = &#123; &apos;XianQing Xing&apos; =&gt; &apos;465578622@qq.com&apos; &#125; //作者</span><br><span class="line">  s.source   = &#123; :git =&gt; &apos;https://github.com/xingxianqing/HZCountdownBtn.git&apos;, :tag =&gt; &quot;1.2&quot; &#125; //git路径、指定tag号</span><br><span class="line">  s.platform = :ios </span><br><span class="line">  s.source_files = &apos;HZCountDownBtn/*&apos;  //库的源代码文件</span><br><span class="line">  s.framework = &apos;UIKit&apos;  //依赖的framework</span><br><span class="line">  s.requires_arc = true</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>7.创建tag，并推送到github,依次执行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;1.2&quot;</span><br><span class="line">$ git tag 1.2</span><br><span class="line">$ git push --tags</span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure></p>
+<p>8.验证podspec文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod spec lint HZCountDownBtn.podspec</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>如果验证不通过，会有详细的ERROR和WARING提示，根据提示依次解决，然后回到第<strong>7</strong>步重新来一遍。<br><strong>注意：</strong>在重新开始之前，我们要删除远程库的tag和本地的tag，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git tag -d 1.2                   //删除本地tag</span><br><span class="line">$ git push origin :refs/tags/1.2  // 删除远程库tag</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果验证通过，如下：</p>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-388b9f367bf86c22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="验证通过"></p>
+<p>9.验证通过后，提交到CocoaPods。命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push HZCountDownBtn.podspec</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-66d3ce8719f9c86d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="提交成功"></p>
+<p>如果是第一次提交，需要先执行这个命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod trunk register 这里写邮箱 &apos;这里起个名字&apos; --description=&apos; 这里写描述&apos;</span><br></pre></td></tr></table></figure></p>
+<p>执行完成之后，会给你的邮箱里发一封邮件，去邮箱点击链接之后，再重新执行第<strong>9</strong>步即可！<br>这是cocopods的guides上的说明：<br><a href="http://guides.cocoapods.org/making/getting-setup-with-trunk.html" target="_blank" rel="external">http://guides.cocoapods.org/making/getting-setup-with-trunk.html</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-b2360d22f4e0a61b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="cocopods guides"></p>
+<p>10.提交完成后，就可以通过cocopods查找HZCountDownBtn了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-c45f6c37c1f2a80c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="pod search HZCountDownBtn"></p>
+<p>这样就可以进行使用了，能看到这里的应该都会使用cocopods了，不会的请移步到这里：<a href="http://www.jianshu.com/p/b5315bf42975" target="_blank" rel="external">http://www.jianshu.com/p/b5315bf42975</a></p>
+<hr>
+<h2 id="私有库"><a href="#私有库" class="headerlink" title="私有库"></a>私有库</h2><p>  私有库只需要执行完第8步！<br>  在使用时，Podfile文件里面的写法和公有库也不一样 ，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;ProjectName&apos;,:git=&gt;&quot;http://xxx.git&quot;(把xxx替换为库的git地址)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
   
 </div>
       <footer id="footer">
