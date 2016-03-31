@@ -372,6 +372,73 @@
 
 
   
+    <article id="post-iOS Touch ID" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/31/iOS Touch ID/" class="article-date">
+  	<time datetime="2016-03-31T03:36:23.000Z" itemprop="datePublished">2016-03-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/31/iOS Touch ID/">iOS Touch ID</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>iOS 8 SDK向开发者公开了Touch ID指纹识别功能，允许App对用户身份进行本地验证。使用Touch ID非常简单，只需要2步：</p>
+<ol>
+<li><p>检查Touch ID是否可用。</p>
+</li>
+<li><p>获得指纹验证结果。</p>
+</li>
+</ol>
+<p>注意：使用Touch ID需要引入LocalAuthentication框架<br><code>import LocalAuthentication</code></p>
+<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">/*创建了一个LAContext实例，用于执行认证策略 */   </span><br><span class="line">LAContext* context = [[LAContext alloc]init];</span><br><span class="line">NSError* errorMessage = nil;</span><br><span class="line">/*</span><br><span class="line">然后在该对象上调用canEvaluatePolicy方法执行某个指定的认证策略 canEvaluatePolicy方法返回的是Bool值，表示指定的认证策略是否允许执行。当方法返回false时，可以通过error对象来获取详细的失败原因。失败的情况可能是设备本身不支持，例如旧版本的iPhone与iPad；运行在模拟器上；或者用户未开启Touch ID功能等</span><br><span class="line">     LAPolicy枚举目前只有一个枚举值.DeviceOwnerAuthenticationWithBiometrics，即使用指纹生物识别方式来认证设备机主。</span><br><span class="line">*/</span><br><span class="line">BOOL isAvailable = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&amp;errorMessage];</span><br><span class="line">    </span><br><span class="line">if (isAvailable) &#123;</span><br><span class="line">    NSLog(@&quot;TouchID 可用 &quot;);</span><br><span class="line"></span><br><span class="line">    //获取验证结果</span><br><span class="line">     /*</span><br><span class="line">     调用该方法将弹出系统调用Touch ID的对话框，其中的localizedReason参数用于在对话框中提示用户详细的理由和原因</span><br><span class="line">     reply参数是一个Block，其中的Bool类型参数success表示指纹验证是否通过，当失败时error参数包含了具体的失败信息</span><br><span class="line">     */</span><br><span class="line">    [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@&quot;需要验证你的指纹来确认您的身份信息&quot; </span><br><span class="line">    reply:^(BOOL success, NSError *error) &#123;</span><br><span class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            if (success) &#123;</span><br><span class="line">                NSLog(@&quot;TouchID 验证成功&quot;);</span><br><span class="line">                 </span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                //点击取消按钮  code = -2</span><br><span class="line">                if(error.code == -2)&#123;</span><br><span class="line">                        </span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                //点击输入密码按钮   code = -3</span><br><span class="line">                if (error.code == -3)&#123;</span><br><span class="line">                    /*可以在此处做输入密码的操作*/</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                [self showAlert:[NSString stringWithFormat:@&quot;TouchID  验证失败   error:%@&quot;,error]];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;];</span><br><span class="line">        </span><br><span class="line">    &#125;else&#123;</span><br><span class="line">       </span><br><span class="line">        [self showAlert:[NSString stringWithFormat:@&quot;TouchID 不可用   error:%@&quot;,errorMessage]];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>源码地址：<a href="https://github.com/xingxianqing/TouchID-Demo" target="_blank" rel="external">https://github.com/xingxianqing/TouchID-Demo</a></p>
+<h3 id="注-指纹验证失败结果其中的几种"><a href="#注-指纹验证失败结果其中的几种" class="headerlink" title="注:    指纹验证失败结果其中的几种"></a>注:    指纹验证失败结果其中的几种</h3><h6 id="1-连续三次指纹识别错误的运行结果："><a href="#1-连续三次指纹识别错误的运行结果：" class="headerlink" title="1. 连续三次指纹识别错误的运行结果："></a>1. 连续三次指纹识别错误的运行结果：</h6><p> 抱歉，您未能通过Touch ID指纹验证！<br> <code>Error Domain=com.apple.LocalAuthentication Code=-1 &quot;Aplication retry limit exceeded.&quot; UserInfo=0x1740797c0 {NSLocalizedDescription=Aplication retry limit exceeded.}</code></p>
+<h6 id="2-Touch-ID功能被锁定，下一次需要输入系统密码时的运行结果："><a href="#2-Touch-ID功能被锁定，下一次需要输入系统密码时的运行结果：" class="headerlink" title="2.Touch ID功能被锁定，下一次需要输入系统密码时的运行结果："></a>2.Touch ID功能被锁定，下一次需要输入系统密码时的运行结果：</h6><p> 抱歉，您未能通过Touch ID指纹验证！<br> <code>Error Domain=com.apple.LocalAuthentication Code=-1 &quot;Biometry is locked out.&quot; UserInfo=0x17407dc00 {NSLocalizedDescription=Biometry is locked out.}</code></p>
+<h6 id="3-用户在Touch-ID对话框中点击了取消按钮："><a href="#3-用户在Touch-ID对话框中点击了取消按钮：" class="headerlink" title="3. 用户在Touch ID对话框中点击了取消按钮："></a>3. 用户在Touch ID对话框中点击了取消按钮：</h6><p> 抱歉，您未能通过Touch ID指纹验证！<br> <code>Error Domain=com.apple.LocalAuthentication Code=-2 &quot;Canceled by user.&quot; UserInfo=0x17006c780 {NSLocalizedDescription=Canceled by user.}</code></p>
+<h6 id="4-在Touch-ID对话框显示过程中，背系统取消，例如按下电源键："><a href="#4-在Touch-ID对话框显示过程中，背系统取消，例如按下电源键：" class="headerlink" title="4. 在Touch ID对话框显示过程中，背系统取消，例如按下电源键："></a>4. 在Touch ID对话框显示过程中，背系统取消，例如按下电源键：</h6><p> 抱歉，您未能通过Touch ID指纹验证！<br> <code>Error Domain=com.apple.LocalAuthentication Code=-4 &quot;UI canceled by system.&quot; UserInfo=0x170065900 {NSLocalizedDescription=UI canceled by system.}</code></p>
+<h6 id="5-用户在Touch-ID对话框中点击输入密码按钮："><a href="#5-用户在Touch-ID对话框中点击输入密码按钮：" class="headerlink" title="5. 用户在Touch ID对话框中点击输入密码按钮："></a>5. 用户在Touch ID对话框中点击输入密码按钮：</h6><p> 抱歉，您未能通过Touch ID指纹验证！<br> <code>Error Domain=com.apple.LocalAuthentication Code=-3 &quot;Fallback authentication mechanism selected.&quot; UserInfo=0x17407e040 {NSLocalizedDescription=Fallback authentication mechanism selected.}</code></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iOS开发常用插件、工具" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -524,6 +591,158 @@
 <p><strong>可以在真机 Safari 输入App的Url Scheme 进行测试</strong></p>
 <p>常用APP的Url Scheme 前缀:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br></pre></td><td class="code"><pre><span class="line">QQ mqq://</span><br><span class="line">微信是 weixin://</span><br><span class="line">网易新闻 newsapp://</span><br><span class="line">淘宝 taobao://</span><br><span class="line">点评 dianping://  dianping://search</span><br><span class="line">微博 sinaweibo://</span><br><span class="line">weico微博 weico://</span><br><span class="line">支付宝 alipay://</span><br><span class="line">豆瓣fm： doubanradio://</span><br><span class="line">微盘 sinavdisk://</span><br><span class="line">网易公开课 ntesopen://</span><br><span class="line">美团 imeituan://</span><br><span class="line">人人 renren://</span><br><span class="line">我查查 wcc://</span><br><span class="line">1号店 wccbyihaodian://</span><br><span class="line">有道词典 yddictproapp://</span><br><span class="line">知乎 zhihu://</span><br><span class="line">优酷 youku://</span><br><span class="line">ZAKER zakeripad://</span><br><span class="line">mdict mdict://</span><br><span class="line">京东hd openApp.jdiPad://</span><br><span class="line">易迅 icson://；yixunipad://</span><br><span class="line">wunderlist wunderlist://</span><br><span class="line">支付宝 alipay://</span><br><span class="line">查找朋友 grenada://；findmyfriends://；fmf1://</span><br><span class="line">查找iphone fmip1://</span><br><span class="line">触宝拨号：dialer://</span><br><span class="line">蜂窝网络：prefs:root=MOBILE_DATA_SETTINGS_ID</span><br><span class="line">WIFI：prefs:root=WIFI（WIFI这几个字母一定要大写）</span><br><span class="line">定位服务：prefs:root=LOCATION_SERVICES</span><br><span class="line">备忘录：mobilenotes://</span><br><span class="line">高德地图：iosamap://</span><br><span class="line">今日头条 snssdk141://</span><br><span class="line">挖财记账 wacai://</span><br><span class="line">QQ音乐 :QQmusic://</span><br><span class="line">猎豹浏览器:sinaweibosso.422729959://</span><br><span class="line">UC浏览器:ucbrowser://</span><br><span class="line">支付宝:alipay://</span><br><span class="line">优酷:youku://</span><br><span class="line">节奏大师:节奏大师tencentrm://</span><br><span class="line">刀塔传奇:刀塔传奇teiron2273://</span><br><span class="line">天天动听:ttpod://</span><br><span class="line">淘宝taobao://</span><br><span class="line">名片全能王camcard://</span><br><span class="line">支付宝alipay://</span><br><span class="line">豆瓣fm：doubanradio://</span><br><span class="line">微盘 sinavdisk://</span><br><span class="line">网易公开课ntesopen://</span><br><span class="line">我查查 wcc://</span><br><span class="line">1号店wccbyihaodian://</span><br><span class="line">有道词典yddictproapp://</span><br><span class="line">知乎zhihu://</span><br><span class="line">墨客 com.moke.moke-1://</span><br><span class="line">名片全能王 camcard://</span><br><span class="line">扫描全能王 camscanner://</span><br><span class="line">12306订票助手 trainassist://</span><br><span class="line">金山词霸 com.kingsoft.powerword.6://</span><br><span class="line">节奏大师 tencentrm://</span><br><span class="line">凤凰新闻 comIfeng3GifengNews://</span><br><span class="line">高铁管家 gtgj://</span><br><span class="line">飞信 fetion://</span><br><span class="line">豆瓣FM doubanradio://</span><br><span class="line">大智慧 dzhiphone://</span><br><span class="line">布卡漫画 buka://</span><br><span class="line">爱奇艺PPS ppstream://</span><br><span class="line">哔哩哔哩动画 bilibili://</span><br><span class="line">56视频 com.56Video://</span><br><span class="line">365日历 rili365://</span><br><span class="line">58同城 wbmain://</span><br><span class="line">遇见 iaround://</span><br><span class="line">陌陌 momochat://</span><br><span class="line">旺旺卖家版 wangwangseller://</span><br><span class="line">有道词典 yddict://</span><br><span class="line">掌阅iReader iReader://</span><br><span class="line">艺龙旅行 elongIPhone://</span><br><span class="line">迅雷+迅雷云播 thunder://</span><br><span class="line">熊猫公交 wb1405365637://</span><br><span class="line">携程无线 CtripWireless://</span><br><span class="line">无线苏州 SuZhouTV://</span><br><span class="line">唯品会 vipshop://</span><br><span class="line">微视 weishiiosscheme://</span><br><span class="line">微拍 wpweipai://</span><br><span class="line">旺信 wangxin://</span><br><span class="line">网易公开课 ntesopen://</span><br><span class="line">网易将军令 netease-mkey://</span><br><span class="line">万年历 youloft.419805549://</span><br><span class="line">土豆视频 tudou://</span><br><span class="line">同花顺 amihexin://</span><br><span class="line">天涯社区 tianya://</span><br><span class="line">天气通Pro sinaweatherpro://</span><br><span class="line">天气通 sinaweather://</span><br><span class="line">墨迹天气 rm434209233MojiWeather://</span><br><span class="line">腾讯新闻 qqnews://</span><br><span class="line">腾讯微云 weiyun://</span><br><span class="line">腾讯地图 sosomap://</span><br><span class="line">淘宝旅行 taobaotravel://</span><br><span class="line">人人 renrenios://</span><br><span class="line">蜻蜓FM qtfmp://</span><br><span class="line">浦发银行 wx1cb534bb13ba3dbd://</span><br><span class="line">招商银行 cmbmobilebank://</span><br><span class="line">支付宝 alipay://</span><br><span class="line">建设银行 wx2654d9155d70a468://</span><br><span class="line">工商银行 com.icbc.iphoneclient://</span><br><span class="line">酷我音乐 com.kuwo.kwmusic.kwmusicForKwsing://</span><br><span class="line">酷狗音乐 kugouURL://</span><br><span class="line">京东 openApp.jdMobile://</span><br><span class="line">QQ音乐 qqmusic://</span><br><span class="line">QQ斗地主 tencent382://</span><br><span class="line">QQ浏览器 mttbrowser://</span><br><span class="line">QQ安全中心 qmtoken://</span><br><span class="line">QQ国际版 mqqiapi://</span><br><span class="line">PPTV pptv://</span><br><span class="line">爱奇艺视频 qiyi-iphone://</span><br><span class="line">暴风影音 com.baofeng.play://</span><br><span class="line">保卫萝卜2 wb2217954495://</span><br><span class="line">保卫萝卜 wb1308702128://</span><br><span class="line">百度云 baiduyun://</span><br><span class="line">百度音乐 baidumusic://</span><br><span class="line">百度视频 baiduvideoiphone:// 或 bdviphapp://</span><br><span class="line">百度糯米 bainuo://</span><br><span class="line">百度魔图 photowonder://</span><br><span class="line">百度魔拍 wondercamera://</span><br><span class="line">百度地图 baidumap://</span><br><span class="line">百度导航 bdNavi://</span><br><span class="line">百度视频hd BaiduVideoiPad://；baiduvideoipadapp://</span><br><span class="line">百度相册hd BaiDuCloudAlbumHD://</span><br><span class="line">百度浏览器hd bdbrowser://</span><br><span class="line">百度文库hd bdwenku://</span><br><span class="line">搜狗输入法 com.sogou.sogouinput://</span><br><span class="line">搜狐视频 sohuvideo-iphone:// 或 sohuvideo://</span><br><span class="line">搜狐新闻 sohunews://</span><br><span class="line">随手记 FDMoney://</span><br><span class="line">腾讯企业邮箱 qqbizmailDistribute2://</span><br><span class="line">腾讯手机管家 mqqsecure://</span><br><span class="line">腾讯视频 tenvideo:// 或 tenvideo2:// 或 tenvideo3://</span><br><span class="line">腾讯微博 TencentWeibo://</span><br><span class="line">天猫 tmall://</span><br><span class="line">天天星连萌 tencent100689806://</span><br><span class="line">天天爱消除 tencent100689805://</span><br><span class="line">天天酷跑 tencent100692648://</span><br><span class="line">天天飞车 tencent100695850://</span><br><span class="line">天天动听 ttpod://</span><br><span class="line">威锋网 com.weiphone.forum://</span><br><span class="line">新浪微博 weibo:// 或 sinaweibo://</span><br><span class="line">网易邮箱 neteasemail://</span><br><span class="line">百度输入法 BaiduIMShop://</span><br><span class="line">C浏览器 ucbrowser://</span><br><span class="line">一个one clover-one://</span><br><span class="line">当当hd dangdanghd://；ddhd://</span><br><span class="line">大众点评hd dianpinghd://</span><br><span class="line">多看阅读 duokan-reader://</span><br><span class="line">艺龙旅行hd elongiPad://</span><br><span class="line">圈点hd skitch://</span><br><span class="line">印象笔记hd enx://</span><br><span class="line">电话 mobilephone://</span><br><span class="line">备忘录 mobilenotes://</span><br><span class="line">设置 prefs:root=SETTING</span><br><span class="line">定位服务 prefs:root=LOCATION_SERVICES</span><br><span class="line">E-Mail MESSAGE://</span><br><span class="line">popAgraph popagraphtumblr://</span><br><span class="line">dropbox db-auth://；dbapi-1://；dbapi-2://；dbapi-3://</span><br><span class="line">goodreader ghttp://；ghttps://；grhttp://；grhttps://；giwhttp://；giwhttps://；gropen://；com.goodreader.sendtogr://</span><br><span class="line">ifttt ifttt://</span><br><span class="line">名片全能王hd camcard://；CamCardHDOpenAPI://</span><br><span class="line">拉手团购hd LaShouGroupHDPay://</span><br><span class="line">美团hd iMeituan://evermemo evermemo://</span><br><span class="line">网易云课堂 wangyiyunketang://</span><br><span class="line">网易公开课 ntesopen://</span><br><span class="line">订票助手2 trainassistfree://</span><br><span class="line">pcalc lite pcalc://</span><br><span class="line">爱奇艺视频 QIYIHD-iPad://</span><br><span class="line">三国kill sgk://</span><br><span class="line">扇贝新闻 shanbaynews://</span><br><span class="line">扇贝单词 shanbay://</span><br><span class="line">扇贝单词hd shanbaywordshd://</span><br><span class="line">skype skype://</span><br><span class="line">搜狐视频hd sohu-SViPad://；sohuvideohd://</span><br><span class="line">teamviewer:teamviewer8://</span><br><span class="line">格志 griddiary://；sumi-interactive://</span><br><span class="line">淘宝hd taobao://；itaobao://；taobaohd://</span><br><span class="line">天猫 tmall://</span><br><span class="line">腾讯视频hd tenvideohd://；tenvideo2://</span><br><span class="line">qq通讯录 tencentappqqpim://</span><br><span class="line">同步推正版HD tbtui://；tuihd://</span><br><span class="line">航旅纵横pro umetrippro://mathpad myscriptmathpad://</span><br><span class="line">雅虎天气！ yweather://</span><br><span class="line">一号店 ipadstore://</span><br><span class="line">优酷hd youkuhd://</span><br><span class="line">知乎 zhihu://</span><br><span class="line">欧陆词典pro eudic://</span><br><span class="line">拓词 towordsp://</span><br><span class="line">TuneIn Radio tunein:// 或 tuneinpro://</span><br><span class="line">OfficeSuite mobisystemsofficesuite://</span><br><span class="line">WPS Office KingsoftOfficeApp://</span><br><span class="line">Line line://1Password onepassword://</span><br><span class="line">Clear(著名的Todo应用) clearapp://</span><br><span class="line">Chrome谷歌浏览器 googlechrome://</span><br><span class="line">Calendars 5 calendars://</span><br><span class="line">PDF Expert 5 pdfexpert5presence://</span><br><span class="line">Documents 5 rdocs://</span><br><span class="line">nPlayer nplayer-http://</span><br><span class="line">GPlayer gplayer://</span><br><span class="line">AVPlayer HD AVPlayerHD://</span><br><span class="line">AVPlayer AVPlayer://</span><br><span class="line">Ace Player aceplayer://</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS 通过 JSPatch 实时修复线上 bug" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/31/iOS 通过 JSPatch 实时修复线上 bug/" class="article-date">
+  	<time datetime="2016-03-31T02:48:13.000Z" itemprop="datePublished">2016-03-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/31/iOS 通过 JSPatch 实时修复线上 bug/">iOS 通过 JSPatch 实时修复线上 bug！</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>JSPatch 是一个开源项目(<a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">Github链接</a>)，只需要在项目里引入极小的引擎文件，就可以使用 JavaScript 调用任何 Objective-C 的原生接口，替换任意 Objective-C 原生方法。目前主要用于下发 JS 脚本替换原生 Objective-C 代码，实时修复线上 bug。<br>除了实时修复线上 bug，甚至为 APP 动态添加一个模块也是可行的，不过可能会有性能问题。<br>使用JSPatch 需要有一个后台可以下发和管理脚本，并且需要处理传输安全等部署工作。<br>目前有一个JSPatch 平台提供了一系列的服务，只需引入一个 SDK 就能使用 JSPatch，只是还在内测中….<br>地址 ：<a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">https://github.com/bang590/JSPatch</a></p>
+<p><strong>CocoPods安装：</strong></p>
+<p>Podfile文件</p>
+<blockquote>
+<p>platform :ios, ‘6.0’<br>    pod ‘JSPatch’</p>
+</blockquote>
+<p>然后 </p>
+<blockquote>
+<p>pod install</p>
+</blockquote>
+<p>下面开始使用：我们先创建一个列表，再通过JSPath改变行数 </p>
+<p>1.我们先在Controller里加入一个列表，让他显示3行 ，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;JRViewController.h&quot;</span><br><span class="line"></span><br><span class="line">@interface JRViewController ()&lt;UITableViewDataSource,UITableViewDelegate&gt;</span><br><span class="line">@property(nonatomic,strong)UITableView* myTableView;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation JRViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    UITableView* tv =[[UITableView alloc]initWithFrame:self.view.bounds</span><br><span class="line">                                                 style:UITableViewStylePlain];</span><br><span class="line">    self.myTableView = tv;</span><br><span class="line">    self.myTableView.delegate = self;</span><br><span class="line">    self.myTableView.dataSource = self;</span><br><span class="line">    [self.view addSubview:self.myTableView];</span><br><span class="line">&#125;</span><br><span class="line">#pragma mark -- UITableViewDataSource</span><br><span class="line">- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</span><br><span class="line">    return 3;</span><br><span class="line">&#125;</span><br><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</span><br><span class="line">    static NSString* i=  @&quot;cell&quot;;</span><br><span class="line">    UITableViewCell* cell = [tableView  dequeueReusableCellWithIdentifier:i];</span><br><span class="line">    if (cell == nil ) &#123;</span><br><span class="line">        cell =[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault</span><br><span class="line">                                    reuseIdentifier:i];</span><br><span class="line">    &#125;</span><br><span class="line">        cell.textLabel.text = @&quot;title&quot;;</span><br><span class="line">        return cell;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>运行一下，显示3行，没问题</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-bc59c2aefc42a13a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>2.创建js文件   New  File -&gt; ios -&gt; Empty …..</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-b95edf4ff29bc47e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>3.在js文件中 写入： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//将JRViewController类中的- (NSInteger)tableView:(UITableView *)tableView </span><br><span class="line">numberOfRowsInSection:(NSInteger)section方法替换掉</span><br><span class="line"></span><br><span class="line">   defineClass(&apos;JRViewController&apos;, &#123;</span><br><span class="line">                tableView_numberOfRowsInSection: function(tableView, section) &#123;</span><br><span class="line">                return 10;</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+<p>关于JSPath的具体使用，请自行查阅：<a href="https://github.com/bang590/JSPatch/wiki" target="_blank" rel="external">https://github.com/bang590/JSPatch/wiki</a></p>
+<p>4.调用这个js文件，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;AppDelegate.h&quot;</span><br><span class="line">#import &quot;JPEngine.h&quot;</span><br><span class="line">@interface AppDelegate ()</span><br><span class="line">@end</span><br><span class="line">@implementation AppDelegate</span><br><span class="line"></span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    [JPEngine startEngine];</span><br><span class="line">    NSString* path = [[NSBundle mainBundle]pathForResource:@&quot;JSPathTest&quot; ofType:@&quot;js&quot;];</span><br><span class="line">    NSString* js = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];</span><br><span class="line">    [JPEngine evaluateScript:js];</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行一下，现在是显示10行了 ！</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-4409cf2ee88bf12c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p><strong>注：<br>    如果我们想要通过 JS 脚本替换原生 Objective-C 代码，实时修复线上 bug的话，还是要通过服务器下发  js脚本  ！ </strong></p>
+<p><strong>代码如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@&quot;http://........&quot;]]</span><br><span class="line">                                   queue:[NSOperationQueue mainQueue]</span><br><span class="line">                       completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) &#123;</span><br><span class="line">    NSString *script = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];</span><br><span class="line">    [JPEngine evaluateScript:script];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p><strong>工具</strong><br><a href="http://bang590.github.io/JSPatchConvertor/" target="_blank" rel="external">将OC代码装换成JSPatch script</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS实现3D Touch并通过模拟器进行调试" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/31/iOS实现3D Touch并通过模拟器进行调试/" class="article-date">
+  	<time datetime="2016-03-31T02:34:11.000Z" itemprop="datePublished">2016-03-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/31/iOS实现3D Touch并通过模拟器进行调试/">iOS实现3D Touch并通过模拟器进行调试</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一、3D Touch 的实现：</strong></p>
+<p>1.在<code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>方法中实现添加和分享的入口，代码如下 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    </span><br><span class="line">    UIApplicationShortcutIcon *firstItemIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeAdd];</span><br><span class="line">    UIMutableApplicationShortcutItem *firstItem = [[UIMutableApplicationShortcutItem alloc]initWithType:@&quot;First&quot; localizedTitle:@&quot;添加&quot; localizedSubtitle:nil icon:firstItemIcon userInfo:nil];</span><br><span class="line">    </span><br><span class="line">    UIApplicationShortcutIcon *secondItemIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeShare];</span><br><span class="line">    UIMutableApplicationShortcutItem *secondItem = [[UIMutableApplicationShortcutItem alloc]initWithType:@&quot;Second&quot; localizedTitle:@&quot;分享&quot; localizedSubtitle:nil icon:secondItemIcon userInfo:nil];</span><br><span class="line">    </span><br><span class="line">    application.shortcutItems = @[firstItem,secondItem];</span><br><span class="line"></span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.实现这个方法<code>-(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler</code> 在这个方法中处理添加和分享的事件，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler&#123;</span><br><span class="line">    </span><br><span class="line">    if ([shortcutItem.type isEqual:@&quot;add&quot;]) &#123;</span><br><span class="line">        </span><br><span class="line">         NSLog(@&quot;执行添加事件&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;else if([shortcutItem.type isEqual:@&quot;share&quot;])&#123;</span><br><span class="line">        </span><br><span class="line">        NSLog(@&quot;执行分享的操作 &quot;);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>二、通过模拟器进行调试</strong><br>使用<a href="https://github.com/DeskConnect/SBShortcutMenuSimulator" target="_blank" rel="external">SBShortcutMenuSimulator</a>来配置模拟器，使模拟器支持3D Touch</p>
+<ul>
+<li>在终端中按顺序输入以下命令： </li>
+</ul>
+<p>1.<code>git clone https://github.com/DeskConnect/SBShortcutMenuSimulator.git</code></p>
+<p>2.<code>cd SBShortcutMenuSimulator</code></p>
+<p>3.<code>make</code></p>
+<ul>
+<li>然后打开刚才写好的程序 运行一下打开模拟器，再去终端中按顺序输入一下命令：</li>
+</ul>
+<p>1.<code>xcrun simctl spawn booted launchctl debug system/com.apple.SpringBoard --environment DYLD_INSERT_LIBRARIES=$PWD/SBShortcutMenuSimulator.dylib</code></p>
+<p>2.<code>xcrun simctl spawn booted launchctl stop com.apple.SpringBoard</code> </p>
+<p>3.<code>echo &#39;com.apple.mobilecal&#39; | nc 127.0.0.1 8000</code><br>   <strong>注意: ‘com.apple.mobilecal’  ‘’里边写的是自己项目的Bundle identifier.  </strong><br>   <strong>这行命令就是要让模拟器显示出3D Touch，每次想要显示快速入口只要重复操作即可 </strong></p>
+<p><strong>三、现在看一下效果：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-b017f282bcc808b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行结果"></p>
+
       
     </div>
     
