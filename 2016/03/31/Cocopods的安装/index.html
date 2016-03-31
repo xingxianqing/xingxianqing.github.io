@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Cocopods安装使用和错误 | Object-C</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Cocopods的安装CocoaPods应该是iOS最常用最有名的类库管理当我们开发iOS应用时，会经常使用到很多第三方开源类库，比如AFNetWorking等等，可能某个类库又用到其他的库，手动一个个去下载所需类库十分麻烦。如果我们项目中用到的类库有更新，还要重新下载新版本，重新加入到项目中，十分麻烦。所以，我们需要 CocoaPods帮我们管理。如何下载和安装CocoaPods？在安装Coco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cocopods安装使用和错误">
+<meta property="og:url" content="http://yoursite.com/2016/03/31/Cocopods的安装/index.html">
+<meta property="og:site_name" content="Object-C">
+<meta property="og:description" content="Cocopods的安装CocoaPods应该是iOS最常用最有名的类库管理当我们开发iOS应用时，会经常使用到很多第三方开源类库，比如AFNetWorking等等，可能某个类库又用到其他的库，手动一个个去下载所需类库十分麻烦。如果我们项目中用到的类库有更新，还要重新下载新版本，重新加入到项目中，十分麻烦。所以，我们需要 CocoaPods帮我们管理。如何下载和安装CocoaPods？在安装Coco">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-dfcb768dbb6dd821.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-77e7508156bbd13f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg">
+<meta property="og:updated_time" content="2016-03-31T04:01:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cocopods安装使用和错误">
+<meta name="twitter:description" content="Cocopods的安装CocoaPods应该是iOS最常用最有名的类库管理当我们开发iOS应用时，会经常使用到很多第三方开源类库，比如AFNetWorking等等，可能某个类库又用到其他的库，手动一个个去下载所需类库十分麻烦。如果我们项目中用到的类库有更新，还要重新下载新版本，重新加入到项目中，十分麻烦。所以，我们需要 CocoaPods帮我们管理。如何下载和安装CocoaPods？在安装Coco">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/228486-dfcb768dbb6dd821.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Object-C" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.imgtn.bdimg.com/it/u=1175119640,990489739&amp;fm=21&amp;gp=0.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Object-C</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">A rotten life.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/xingxianqing" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Object-C</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://img3.imgtn.bdimg.com/it/u=1175119640,990489739&amp;fm=21&amp;gp=0.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Object-C</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">A rotten life.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/xingxianqing" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Cocopods的安装" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/31/Cocopods的安装/" class="article-date">
+  	<time datetime="2016-03-31T03:47:01.000Z" itemprop="datePublished">2016-03-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Cocopods安装使用和错误
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Cocopods的安装"><a href="#Cocopods的安装" class="headerlink" title="Cocopods的安装"></a>Cocopods的安装</h4><p>CocoaPods应该是iOS最常用最有名的类库管理<br>当我们开发iOS应用时，会经常使用到很多第三方开源类库，比如AFNetWorking等等，可能某个类库又用到其他的库，手动一个个去下载所需类库十分麻烦。如果我们项目中用到的类库有更新，还要重新下载新版本，重新加入到项目中，十分麻烦。所以，我们需要 CocoaPods帮我们管理。<br>如何下载和安装CocoaPods？<br>在安装CocoaPods之前，首先要在本地安装好Ruby环境。至于如何在Mac中安装好Ruby环境，请找度娘和谷哥。<br>假如你在本地已经安装好Ruby环境，那么下载和安装CocoaPods将十分简单，只需要一行命令。在Terminator中输入以下命令：</p>
+<blockquote>
+<p>sudo gem install cocoapods</p>
+</blockquote>
+<p>但是,在终端中敲入这个命令之后，可能半天没有任何反应。</p>
+<p>这时我们可以用淘宝的Ruby镜像来访问cocoapods。按照下面的顺序在终端中敲入依次敲入命令：</p>
+<blockquote>
+<p> $ gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a></p>
+</blockquote>
+<p>等有反应之后再敲入以下命令</p>
+<blockquote>
+<p>$ gem sources -a <a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a></p>
+</blockquote>
+<p>为了验证你的Ruby镜像是并且仅是taobao，可以用以下命令查看：</p>
+<blockquote>
+<p>$ gem sources -l</p>
+</blockquote>
+<p>只有在终端中出现下面文字才表明你上面的命令是成功的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*** CURRENT SOURCES ***</span><br><span class="line">https://ruby.taobao.org/</span><br></pre></td></tr></table></figure>
+<p>这时候，我们再次在终端中运行：</p>
+<blockquote>
+<p>$ sudo gem install cocoapods</p>
+<p>$ pod setup</p>
+</blockquote>
+<p>等一会，CocoaPods就可以在你本地下载并且安装好了</p>
+<h4 id="安装时候遇到的问题："><a href="#安装时候遇到的问题：" class="headerlink" title="安装时候遇到的问题："></a>安装时候遇到的问题：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Setting up CocoaPods master repo</span><br><span class="line">[!] /usr/bin/git clone https://github.com/CocoaPods/Specs.git  master --depth=1</span><br><span class="line"></span><br><span class="line">Cloning into &apos;master&apos;...</span><br><span class="line">error: RPC failed; result=18, HTTP code = 200</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br><span class="line">fatal: early EOF</span><br><span class="line">fatal: index-pack failed</span><br></pre></td></tr></table></figure>
+<h4 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h4><blockquote>
+<p>$ git config –global http.postBuffer 24288000</p>
+<p>$ git config –list</p>
+</blockquote>
+<p>会输出：http.postbuffer=24288000</p>
+<p>再次执行:</p>
+<blockquote>
+<p>$ pod setup</p>
+</blockquote>
+<h4 id="Cocopods使用"><a href="#Cocopods使用" class="headerlink" title="Cocopods使用"></a>Cocopods使用</h4><p>我们想用CocoaPods，在项目中导入ASIHTTPRequest类库<br>首先，我们要确定ASIHTTPRequest是否支持CocoaPods，可以用CocoaPods的搜索功能验证一下。在终端中输入：</p>
+<blockquote>
+<p>$ pod search ASIHTTPRequest</p>
+</blockquote>
+<p>输入之后，你会在终端中看到关于ASIHTTPRequest类库的一些信息。<br>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-&gt; ASIHTTPRequest (1.8.2)</span><br><span class="line">     Easy to use CFNetwork wrapper for HTTP requests, Objective-C, Mac    OS X and  iPhone.</span><br><span class="line">     pod &apos;ASIHTTPRequest&apos;, &apos;~&gt; 1.8.2&apos;</span><br><span class="line">     - Homepage: http://allseeing-i.com/ASIHTTPRequest</span><br><span class="line">     - Source:   https://github.com/pokeb/asi-http-request.git</span><br><span class="line">     - Versions: 1.8.2, 1.8.1 [master repo]</span><br><span class="line">     - Sub specs:</span><br><span class="line">     - ASIHTTPRequest/Core (1.8.2)</span><br><span class="line">     - ASIHTTPRequest/ASIWebPageRequest (1.8.2)</span><br><span class="line">     - ASIHTTPRequest/CloudFiles (1.8.2)</span><br><span class="line">     - ASIHTTPRequest/S3 (1.8.2)</span><br></pre></td></tr></table></figure>
+<p>现在知道ASIHTTPRequest支持Cocopods了，我们就要道你的项目中创建一个文件，这个文件就叫做“Podfile”，一定得是这个文件名，而且没有后缀。在里面添加<code>pod &#39;ASIHTTPRequest&#39;, &#39;~&gt; 1.8.2&#39;</code>,就是告诉CocoaPods,我们要下载ASIHTTPRequest ，1.8.2版本</p>
+<p>我们先创建这个PodFile文件。在终端中进入（cd命令）你项目所在目录，然后在当前目录下，利用vim创建Podfile，运行：</p>
+<blockquote>
+<p>$ vim Podfile</p>
+</blockquote>
+<p>然后在Podfile文件中输入以下文字：</p>
+<blockquote>
+<p>pod “ASIHTTPRequest”, “~&gt; 1.8.2”</p>
+</blockquote>
+<p>然后保存退出。vim环境下，保存退出命令是：</p>
+<blockquote>
+<p>:wq!</p>
+</blockquote>
+<p>我们会发现项目中，多了一个名字为Podfile的文件，而且文件内容就是输入的内容。<code>注意，Podfile文件应该和你的工程文件.xcodeproj在同一个目录下。</code></p>
+<p>下面我们就可以利用CocoPods下载ASIHTTPRequest类库了。还是在终端中的当前项目下，运行命令：</p>
+<blockquote>
+<p>$ pod install</p>
+</blockquote>
+<p>运行完命令之后，会看见有这句话<code>[!] From now on use ********.xcworkspace</code>这是说：以后打开项目就用 <strong><em>**</em></strong>.xcworkspace 打开，而不是之前的<strong><em>**</em></strong>.xcodeproj文件。</p>
+<p>现在，我们就可以开始使用ASIHTTPRequest啦。可以测试一下，在项目中输入：<br><code>#import &lt;AFNetworking.h&gt;</code>或者<code>#import &quot;AFNetworking.h&quot;</code>试试</p>
+<p>如果以后有更新 或者 添加别的类库，用update命令即可：</p>
+<blockquote>
+<p>$ pod update</p>
+</blockquote>
+<h4 id="CocoaPods-报错"><a href="#CocoaPods-报错" class="headerlink" title="CocoaPods 报错"></a>CocoaPods 报错</h4><p>Xcode 升级到 6.0 后，更新 CocoaPods 或者以前手动添加过第三方SDK改用Cocopods，可能会出现以下的错误</p>
+<h6 id="错误1："><a href="#错误1：" class="headerlink" title="错误1："></a>错误1：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[!] The `Paopao [Debug]` target overrides the `PODS_ROOT` build setting defined in `Pods/Target Support Files/Pods/Pods.debug.xcconfig&apos;. This can lead to problems with the CocoaPods installation</span><br><span class="line">    - Use the `$(inherited)` flag, or</span><br><span class="line">    - Remove the build settings from the target.</span><br><span class="line"> </span><br><span class="line">[!] The `Paopao [Debug]` target overrides the `OTHER_LDFLAGS` build setting defined in `Pods/Target Support Files/Pods/Pods.debug.xcconfig&apos;. This can lead to problems with the CocoaPods installation</span><br><span class="line">    - Use the `$(inherited)` flag, or</span><br><span class="line">    - Remove the build settings from the target.</span><br><span class="line"> </span><br><span class="line">[!] The `Paopao [Release]` target overrides the `PODS_ROOT` build setting defined in `Pods/Target Support Files/Pods/Pods.release.xcconfig&apos;. This can lead to problems with the CocoaPods installation</span><br><span class="line">    - Use the `$(inherited)` flag, or</span><br><span class="line">    - Remove the build settings from the target.</span><br><span class="line"> </span><br><span class="line">[!] The `Paopao [Release]` target overrides the `OTHER_LDFLAGS` build setting defined in `Pods/Target Support Files/Pods/Pods.release.xcconfig&apos;. This can lead to problems with the CocoaPods installation</span><br><span class="line">    - Use the `$(inherited)` flag, or</span><br><span class="line">    - Remove the build settings from the target.</span><br></pre></td></tr></table></figure>
+<p>产生此警告的原因是项目 Target 中的一些设置，CocoaPods 也做了默认的设置，如果两个设置结果不一致，就会造成问题。</p>
+<p>我想要使用 CocoaPods 中的设置，分别在我的项目中定义<code>PODS_ROOT</code> 和 <code>Other Linker Flags</code>的地方，把他们的值用<code>$(inherited)</code>替换掉，进入终端，执行</p>
+<blockquote>
+<p>pod update</p>
+</blockquote>
+<p> 警告没了</p>
+<p>我个人更喜欢一种简单粗暴的方法：</p>
+<p>点击项目文件 project.xcodeproj，右键<code>显示包内容</code>，用文本编辑器打开<code>project.pbxproj</code>，删除<code>OTHER_LDFLAGS</code>的地方，保存，<code>pod update</code>,警告没了。。。。</p>
+<h5 id="错误2："><a href="#错误2：" class="headerlink" title="错误2："></a>错误2：</h5><p><img src="http://upload-images.jianshu.io/upload_images/228486-dfcb768dbb6dd821.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg" alt="错误"></p>
+<p>这个解决也比较简单，<br>在Build Setting 中的Other Linker Flags选项中加入<code>$(OTHER_LDFLAGS)</code>  如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-77e7508156bbd13f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg" alt="解决错误"></p>
+<p>编译通过………</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/31/iOS Touch ID/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS Touch ID</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Cocopods的安装" data-title="Cocopods安装使用和错误" data-url="http://yoursite.com/2016/03/31/Cocopods的安装/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Object-C
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
