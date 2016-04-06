@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS使用Jenkins+fir搭建持续集成环境 | Object-C</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、安装jenkins
+$ brew install jenkins
+
+如果没有安装java环境的话会出现以下错误，需要先安装jenkins需要安装java环境， JDK下载地址
+1234567jenkins: Java 1.7+ is required to install this formula.You can install with Homebrew Cask:  brew instal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS使用Jenkins+fir搭建持续集成环境">
+<meta property="og:url" content="http://yoursite.com/2016/04/06/iOS使用Jenkins+fir搭建持续集成环境/index.html">
+<meta property="og:site_name" content="Object-C">
+<meta property="og:description" content="一、安装jenkins
+$ brew install jenkins
+
+如果没有安装java环境的话会出现以下错误，需要先安装jenkins需要安装java环境， JDK下载地址
+1234567jenkins: Java 1.7+ is required to install this formula.You can install with Homebrew Cask:  brew instal">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-99edec7f4c3e6740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-d808e46b24b6befa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-3935b11516a32e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-2fb668524327e136.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-0237fb64eb53f402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-6a5ff4e7e0e98dfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-a178584ed6c5cdc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-c727f5da4e62aee5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-bb852d7cfd4d333b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-55c25c57c20cc435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-04-06T10:56:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS使用Jenkins+fir搭建持续集成环境">
+<meta name="twitter:description" content="一、安装jenkins
+$ brew install jenkins
+
+如果没有安装java环境的话会出现以下错误，需要先安装jenkins需要安装java环境， JDK下载地址
+1234567jenkins: Java 1.7+ is required to install this formula.You can install with Homebrew Cask:  brew instal">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/228486-99edec7f4c3e6740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="Object-C" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.imgtn.bdimg.com/it/u=1175119640,990489739&amp;fm=21&amp;gp=0.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Object-C</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">A rotten life.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/xingxianqing" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/3D-Touch/" style="font-size: 10px;">3D Touch</a> <a href="/tags/CocoaPods/" style="font-size: 15px;">CocoaPods</a> <a href="/tags/JSPatch/" style="font-size: 10px;">JSPatch</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Quartzcode/" style="font-size: 10px;">Quartzcode</a> <a href="/tags/Touch-ID/" style="font-size: 10px;">Touch ID</a> <a href="/tags/XcodeColors/" style="font-size: 10px;">XcodeColors</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Object-C</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://img3.imgtn.bdimg.com/it/u=1175119640,990489739&amp;fm=21&amp;gp=0.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Object-C</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">A rotten life.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/xingxianqing" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-iOS使用Jenkins+fir搭建持续集成环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/06/iOS使用Jenkins+fir搭建持续集成环境/" class="article-date">
+  	<time datetime="2016-04-06T06:00:00.000Z" itemprop="datePublished">2016-04-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS使用Jenkins+fir搭建持续集成环境
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、安装jenkins"><a href="#一、安装jenkins" class="headerlink" title="一、安装jenkins"></a>一、安装jenkins</h3><blockquote>
+<p>$ brew install jenkins</p>
+</blockquote>
+<p>如果没有安装java环境的话会出现以下错误，需要先安装jenkins需要安装java环境， <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">JDK下载地址</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jenkins: Java 1.7+ is required to install this formula.</span><br><span class="line">You can install with Homebrew Cask:</span><br><span class="line">  brew install Caskroom/cask/java</span><br><span class="line"></span><br><span class="line">You can download from:</span><br><span class="line">  http://www.oracle.com/technetwork/java/javase/downloads/index.html</span><br><span class="line">Error: An unsatisfied requirement failed this build.</span><br></pre></td></tr></table></figure>
+<p>安装完成后，启动jenkins，命令：</p>
+<blockquote>
+<p>$ jenkins</p>
+</blockquote>
+<p>在浏览器中输入以下地址访问：</p>
+<blockquote>
+<p><a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a></p>
+</blockquote>
+<p>访问成功后，找到系统管理-&gt;插件管理，然后添加一下4个插件：</p>
+<ul>
+<li><p>Xcode integration</p>
+</li>
+<li><p>Git plugin</p>
+</li>
+<li><p>Post-Build Script Plug-in</p>
+</li>
+<li><p>GitHub plugin</p>
+</li>
+</ul>
+<p>安装完成后，重启jenkins!</p>
+<h4 id="二、新建项目"><a href="#二、新建项目" class="headerlink" title="二、新建项目"></a>二、新建项目</h4><p>1.点击左侧工具栏的新建-&gt;填入项目名称-&gt; 选择 构建一个自由风格的软件项目 -&gt;点击 OK按钮 -&gt;进入到配置页面</p>
+<p>2.填入描述信息，找到<strong>源码管理</strong>这一项，我的在GitLab上，所以我这里选择Git，填入     Repository URL</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-99edec7f4c3e6740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="源码管理"></p>
+<p>3.可以通过Poll SCM 选项设置Jenkins在什么时候自动创建(比如：周一到周五，每天早上10点自动构建）,可以点击输入框后边的问号看说明。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-d808e46b24b6befa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Poll SCM"></p>
+<p>4.找到<strong>构建</strong>选项中<strong>增加构建步骤</strong>，选择<strong>Xcode</strong></p>
+<ul>
+<li>Target   ：填写项目中Target的名字</li>
+<li>Clean before build      设置为： YES</li>
+<li>Configuration             设置为：Release</li>
+<li>.ipa filename pattern   起一个.ipa文件的名字，不需要写后缀</li>
+<li>Output directory        是.ipa的输出路径，我填的是：${WORKSPACE}/build/</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-3935b11516a32e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建"></p>
+<p>5.在下边的<strong>Code signing &amp; OS X keychain options</strong>选项中，设置证书信息，之前在项目中就已经设置过证书了，在这里只要填入路径就可以了</p>
+<p>步骤：</p>
+<ul>
+<li>勾选Unlock KeyChain？选项，</li>
+<li><p>在KeyChain Path的输入框中填入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;HOME&#125;/Library/Keychains/login.keychain</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Keychain password的输入框中填入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你的钥匙串的密码</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-2fb668524327e136.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Code signing &amp; OS X keychain options"></p>
+<p>6.如果使用了cocoapods，需要设置一下<strong>Advanced Xcode build options</strong>选项。</p>
+<ul>
+<li>Schema 项目的schema名称</li>
+<li>SDK 设置为：iphoneos</li>
+<li>Xcode Workspace File  填写workspace的文件名字，不需要后缀</li>
+<li>Build output directory 设置为：${WORKSPACE}/build/</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-0237fb64eb53f402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Advanced Xcode build options"></p>
+<p><strong>注意:</strong>在下一步之前，先安装fir.im 的工具fir-cli，命令：</p>
+<blockquote>
+<p>$ sudo gem install fir-cli –no-ri –no-rdoc</p>
+</blockquote>
+<p>7.点击<strong>增加构建后操作</strong>-&gt;选择<strong>Execute a set of scripts</strong>-&gt;点击<strong>Add Build Step</strong>-&gt;选择<strong>Execute shell</strong>，输入框中填入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fir p $&#123;WORKSPACE&#125;/build/wangcai.ipa -T fir的APIToken</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-6a5ff4e7e0e98dfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="增加构建后操作"></p>
+<p>fir的APIToken需要登录fir获取</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-a178584ed6c5cdc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="fir的APIToken"></p>
+<p>设置完成之后可以点击保存了！</p>
+<p>8.保存之后点击<strong>立即构建</strong>，就可以看见开始构建了，蓝色是构建成功，红色为失败</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-c727f5da4e62aee5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="立即构建"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-bb852d7cfd4d333b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建中"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/228486-55c25c57c20cc435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="上传到fir后的样子"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/29/让自己的开源项目支持CocoaPods/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">让自己的开源项目支持CocoaPods</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="iOS使用Jenkins+fir搭建持续集成环境" data-title="iOS使用Jenkins+fir搭建持续集成环境" data-url="http://yoursite.com/2016/04/06/iOS使用Jenkins+fir搭建持续集成环境/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Object-C
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
