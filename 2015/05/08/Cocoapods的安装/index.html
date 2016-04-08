@@ -12,13 +12,13 @@
 <meta property="og:url" content="http://yoursite.com/2015/05/08/Cocoapods的安装/index.html">
 <meta property="og:site_name" content="Object-C">
 <meta property="og:description" content="Cocopods的安装CocoaPods应该是iOS最常用最有名的类库管理当我们开发iOS应用时，会经常使用到很多第三方开源类库，比如AFNetWorking等等，可能某个类库又用到其他的库，手动一个个去下载所需类库十分麻烦。如果我们项目中用到的类库有更新，还要重新下载新版本，重新加入到项目中，十分麻烦。所以，我们需要 CocoaPods帮我们管理。如何下载和安装CocoaPods？在安装Coco">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-dfcb768dbb6dd821.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-77e7508156bbd13f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg">
-<meta property="og:updated_time" content="2016-04-01T08:15:04.000Z">
+<meta property="og:image" content="http://yoursite.com/images/cocopods-anZhuang-cuoWu2.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/cocopods-anZhuang-cuoWu2-JieJue.jpeg">
+<meta property="og:updated_time" content="2016-04-08T07:49:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cocoapods安装使用和错误">
 <meta name="twitter:description" content="Cocopods的安装CocoaPods应该是iOS最常用最有名的类库管理当我们开发iOS应用时，会经常使用到很多第三方开源类库，比如AFNetWorking等等，可能某个类库又用到其他的库，手动一个个去下载所需类库十分麻烦。如果我们项目中用到的类库有更新，还要重新下载新版本，重新加入到项目中，十分麻烦。所以，我们需要 CocoaPods帮我们管理。如何下载和安装CocoaPods？在安装Coco">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/228486-dfcb768dbb6dd821.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/cocopods-anZhuang-cuoWu2.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Object-C" type="application/atom+xml">
   
@@ -76,7 +76,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -291,9 +291,9 @@
 <p> 警告没了</p>
 <p>我个人更喜欢一种简单粗暴的方法：</p>
 <p>点击项目文件 project.xcodeproj，右键<code>显示包内容</code>，用文本编辑器打开<code>project.pbxproj</code>，删除<code>OTHER_LDFLAGS</code>的地方，保存，<code>pod update</code>,警告没了。。。。</p>
-<h5 id="错误2："><a href="#错误2：" class="headerlink" title="错误2："></a>错误2：</h5><p><img src="http://upload-images.jianshu.io/upload_images/228486-dfcb768dbb6dd821.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg" alt="错误"></p>
+<h5 id="错误2："><a href="#错误2：" class="headerlink" title="错误2："></a>错误2：</h5><p><img src="/images/cocopods-anZhuang-cuoWu2.jpeg"></p>
 <p>这个解决也比较简单，<br>在Build Setting 中的Other Linker Flags选项中加入<code>$(OTHER_LDFLAGS)</code>  如图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-77e7508156bbd13f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240/format/jpg" alt="解决错误"></p>
+<p><img src="/images/cocopods-anZhuang-cuoWu2-JieJue.jpeg"></p>
 <p>编译通过………</p>
 
       
