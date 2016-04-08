@@ -20,17 +20,17 @@ $ brew install jenkins
 
 如果没有安装java环境的话会出现以下错误，需要先安装jenkins需要安装java环境， JDK下载地址
 1234567jenkins: Java 1.7+ is required to install this formula.You can install with Homebrew Cask:  brew instal">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-99edec7f4c3e6740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-d808e46b24b6befa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-3935b11516a32e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-2fb668524327e136.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-0237fb64eb53f402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-6a5ff4e7e0e98dfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-a178584ed6c5cdc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-c727f5da4e62aee5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-bb852d7cfd4d333b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/228486-55c25c57c20cc435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-04-06T10:58:20.000Z">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-4.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-5.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-6.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-7.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-8.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-9.png">
+<meta property="og:image" content="http://yoursite.com/images/Jenkins-10.png">
+<meta property="og:updated_time" content="2016-04-08T08:27:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS使用Jenkins+fir搭建持续集成环境">
 <meta name="twitter:description" content="一、安装jenkins
@@ -38,7 +38,7 @@ $ brew install jenkins
 
 如果没有安装java环境的话会出现以下错误，需要先安装jenkins需要安装java环境， JDK下载地址
 1234567jenkins: Java 1.7+ is required to install this formula.You can install with Homebrew Cask:  brew instal">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/228486-99edec7f4c3e6740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="http://yoursite.com/images/Jenkins-1.png">
   
     <link rel="alternative" href="/atom.xml" title="Object-C" type="application/atom+xml">
   
@@ -96,7 +96,7 @@ $ brew install jenkins
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -263,9 +263,9 @@ $ brew install jenkins
 <p>安装完成后，重启jenkins!</p>
 <h4 id="二、新建项目"><a href="#二、新建项目" class="headerlink" title="二、新建项目"></a>二、新建项目</h4><p>1.点击左侧工具栏的新建-&gt;填入项目名称-&gt; 选择 构建一个自由风格的软件项目 -&gt;点击 OK按钮 -&gt;进入到配置页面</p>
 <p>2.填入描述信息，找到<strong>源码管理</strong>这一项，我的在GitLab上，所以我这里选择Git，填入     Repository URL</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-99edec7f4c3e6740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="源码管理"></p>
+<p><img src="/images/Jenkins-1.png"></p>
 <p>3.可以通过Poll SCM 选项设置Jenkins在什么时候自动创建(比如：周一到周五，每天早上10点自动构建）,可以点击输入框后边的问号看说明。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-d808e46b24b6befa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Poll SCM"></p>
+<p><img src="/images/Jenkins-2.png"></p>
 <p>4.找到<strong>构建</strong>选项中<strong>增加构建步骤</strong>，选择<strong>Xcode</strong></p>
 <ul>
 <li>Target   ：填写项目中Target的名字</li>
@@ -274,7 +274,7 @@ $ brew install jenkins
 <li>.ipa filename pattern   起一个.ipa文件的名字，不需要写后缀</li>
 <li>Output directory        是.ipa的输出路径，我填的是：${WORKSPACE}/build/</li>
 </ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-3935b11516a32e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建"></p>
+<p><img src="/images/Jenkins-3.png"></p>
 <p>5.在下边的<strong>Code signing &amp; OS X keychain options</strong>选项中，设置证书信息，之前在项目中就已经设置过证书了，在这里只要填入路径就可以了</p>
 <p>步骤：</p>
 <ul>
@@ -286,7 +286,7 @@ $ brew install jenkins
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你的钥匙串的密码</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-2fb668524327e136.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Code signing &amp; OS X keychain options"></p>
+<p><img src="/images/Jenkins-4.png"></p>
 <p>6.如果使用了cocoapods，需要设置一下<strong>Advanced Xcode build options</strong>选项。</p>
 <ul>
 <li>Schema 项目的schema名称</li>
@@ -294,21 +294,21 @@ $ brew install jenkins
 <li>Xcode Workspace File  填写workspace的文件名字，不需要后缀</li>
 <li>Build output directory 设置为：${WORKSPACE}/build/</li>
 </ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-0237fb64eb53f402.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Advanced Xcode build options"></p>
+<p><img src="/images/Jenkins-5.png"></p>
 <p><strong>注意:</strong>在下一步之前，先安装fir.im 的工具fir-cli，命令：</p>
 <blockquote>
 <p>$ sudo gem install fir-cli –no-ri –no-rdoc</p>
 </blockquote>
 <p>7.点击<strong>增加构建后操作</strong>-&gt;选择<strong>Execute a set of scripts</strong>-&gt;点击<strong>Add Build Step</strong>-&gt;选择<strong>Execute shell</strong>，输入框中填入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fir p $&#123;WORKSPACE&#125;/build/wangcai.ipa -T fir的APIToken</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-6a5ff4e7e0e98dfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="增加构建后操作"></p>
+<p><img src="/images/Jenkins-6.png"></p>
 <p>fir的APIToken需要登录fir获取</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-a178584ed6c5cdc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="fir的APIToken"></p>
+<p><img src="/images/Jenkins-7.png"></p>
 <p>设置完成之后可以点击保存了！</p>
 <p>8.保存之后点击<strong>立即构建</strong>，就可以看见开始构建了，蓝色是构建成功，红色为失败</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-c727f5da4e62aee5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="立即构建"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-bb852d7cfd4d333b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建中"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/228486-55c25c57c20cc435.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="上传到fir后的样子"></p>
+<p><img src="/images/Jenkins-8.png"></p>
+<p><img src="/images/Jenkins-9.png"></p>
+<p><img src="/images/Jenkins-10.png"></p>
 
       
     </div>
