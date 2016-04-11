@@ -276,6 +276,24 @@
 <p><img src="/images/Jenkins-8.png"></p>
 <p><img src="/images/Jenkins-9.png"></p>
 <p><img src="/images/Jenkins-10.png"></p>
+<h4 id="三、邮件配置"><a href="#三、邮件配置" class="headerlink" title="三、邮件配置"></a>三、邮件配置</h4><p>1.在首页找到<strong>系统管理</strong>选项并进入-&gt;选择<strong>系统设置</strong>选项-&gt;找到<strong>系统管理员邮件地址</strong>，并填入你的邮箱。</p>
+<p><img src="/images/jenkins-email-1.png"></p>
+<p>2.找到<strong>邮件通知选项</strong>进行配置，（如果你的邮箱不支持SMTP，要先去邮箱账户里设置一下）</p>
+<ul>
+<li>SMTP服务器：根据自己的邮箱配置，我用的是QQ企业邮箱，填的是 <code>smtp.exmail.qq.com</code></li>
+<li>勾选<strong>使用SMTP</strong>认证</li>
+<li>用户名： 邮箱地址</li>
+<li>密码： 密码 ，<strong>如果邮箱开启了“微信动态码，这里要填授权码”</strong></li>
+<li>勾选<strong>使用SSL协议</strong>认证</li>
+<li>端口：根据自己邮箱SMTP服务器来配置</li>
+<li>字符集： UTF-8</li>
+<li>勾选<strong>通过发送测试邮件测试配置</strong>选项</li>
+<li>Test e-mail recipient：邮箱地址</li>
+<li>点击<strong>Test configuration</strong>按钮进行测试，输入框下方出现<code>Email was successfully sent</code>,表示测试成功，你会收到一封内容为<code>This is test email #9 sent from Jenkins</code>的邮件,然后保存当前设置即可！</li>
+</ul>
+<p><img src="/images/jenkins-email-2.png"></p>
+<p>2.进入你的项目-&gt;在左侧找到<strong>配置</strong>选项并进入配置页面，找到<strong>增加构建后步骤</strong>选项并点击-&gt;选择<strong>E-mail Notification</strong>，在<strong>Recipients</strong> 填入邮箱地址，如果要发给多个人，以空格分隔，这样在构建失败的时候都会发送邮件给这个接收者。</p>
+<p><img src="/images/jenkins-email-3.png"></p>
 
       
     </div>
