@@ -33,7 +33,7 @@ $ brew install jenkins
 <meta property="og:image" content="http://yoursite.com/images/jenkins-email-1.png">
 <meta property="og:image" content="http://yoursite.com/images/jenkins-email-2.png">
 <meta property="og:image" content="http://yoursite.com/images/jenkins-email-3.png">
-<meta property="og:updated_time" content="2016-04-11T10:34:59.000Z">
+<meta property="og:updated_time" content="2016-09-05T09:40:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS使用Jenkins+fir搭建持续集成环境">
 <meta name="twitter:description" content="一、安装jenkins
@@ -301,6 +301,10 @@ $ brew install jenkins
 <p><strong>注意:</strong>在下一步之前，先安装fir.im 的工具fir-cli，命令：</p>
 <blockquote>
 <p>$ sudo gem install fir-cli –no-ri –no-rdoc</p>
+</blockquote>
+<p>Mac OS X 10.11 以后的版本, 由于10.11引入了 rootless, 无法直接安装 fir-cli, 使用以下命令：</p>
+<blockquote>
+<p>$ sudo gem install -n /usr/local/bin fir-cli</p>
 </blockquote>
 <p>7.点击<strong>增加构建后操作</strong>-&gt;选择<strong>Execute a set of scripts</strong>-&gt;点击<strong>Add Build Step</strong>-&gt;选择<strong>Execute shell</strong>，输入框中填入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fir p $&#123;WORKSPACE&#125;/build/wangcai.ipa -T fir的APIToken</span><br></pre></td></tr></table></figure>
